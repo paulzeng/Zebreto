@@ -5,7 +5,7 @@ import logger from "redux-logger";
 import reducer from "./reducers";
 
 let middlewares = [
-  logger,
+  logger(),
 ];
 
 const middleware = applyMiddleware(...middlewares);

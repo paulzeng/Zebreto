@@ -1,8 +1,8 @@
 import * as types from '../actions/deckActionTypes';
 
 export default function Deck(state = {}, action = {}) {
-  const {payload, error, meta = {}} = action;
-  switch (action.type) {
+  const {type, payload, error, meta = {}} = action;
+  switch (type) {
     case types.FETCH_DECKS: {
       console.log('fetch decks');
       return {

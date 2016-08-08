@@ -58,7 +58,6 @@ class Decks extends Component {
 }
 
 export default connect(store => {
-  console.log(store);
   return {
     decks:store.decks
   };
