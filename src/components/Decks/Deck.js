@@ -7,12 +7,22 @@ import styles from './styles';
 import Button from './../Button';
 import NormalText from './../NormalText';
 
+import DeckModel from './../../data/Deck';
+
 export default class Deck extends Component {
   static displayName = 'Deck';
+  static propTypes = {
+    onReview: React.PropTypes.func.isRequired,
+    deck: React.PropTypes.instanceOf(DeckModel),
+    // addCards: React.PropTypes.func.isRequired
+  };
 
   _review() {
-    //TODO
-    console.log(this.props)
+    this.props.onReview(this.props.deck.id);
+  }
+
+  _addCards() {
+
   }
 
   render() {
@@ -20,10 +30,14 @@ export default class Deck extends Component {
       <View style={styles.deckGroup}>
         <Button style={styles.deckButton} onPress={this._review.bind(this)}>
           <NormalText>
-            some deck
+            {this.props.deck.name}:{this.props.deck.dueCards} due
           </NormalText>
         </Button>
 
+        <Button style={styles.editButton}
+                onPress={this._addCards.bind(this)}>
+          <NormalText>+</NormalText>
+        </Button>
       </View>
     );
   }

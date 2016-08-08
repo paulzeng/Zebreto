@@ -28,15 +28,12 @@ class Decks extends Component {
   }
 
   _loadDecks() {
-    if (!this.state.decks) {
-      console.log('decks is empty');
+    if (!this.props.decks) {
       return null;
     }
-    return this.state.decks.map(deck => {
-      console.log('decks is below:');
-      console.log(this.state.decks);
+    return this.props.decks.map(deck => {
       return (
-        <Deck />//TODO
+        <Deck key={deck.id} deck={deck} onReview={() => {console.log('review')}} />
       );
     });
 
@@ -59,6 +56,6 @@ class Decks extends Component {
 
 export default connect(store => {
   return {
-    decks:store.decks
+    decks:store.deck.decks
   };
 })(Decks);

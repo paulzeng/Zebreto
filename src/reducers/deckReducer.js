@@ -3,7 +3,7 @@ import * as types from '../actions/deckActionTypes';
 export default function Deck(state = {}, action = {}) {
   const {type, payload, error, meta = {}} = action;
   switch (type) {
-    case types.FETCH_DECKS: {
+    case types.FETCH_DECKS_FULFILLED: {
       console.log('fetch decks');
       return {
         ...state,
