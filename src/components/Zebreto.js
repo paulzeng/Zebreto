@@ -6,10 +6,6 @@ import {
   Navigator
 } from 'react-native';
 import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
-
-//actions
-import actions from './../actions';
 
 //components
 import Heading from './Header';
@@ -20,13 +16,9 @@ class Zebreto extends Component {
   static displayName:'Zebreto';
 
   componentWillMount() {
-    const {actions, card, deck} = this.props;
-    console.log('Zebreto action' + actions);
-    console.log(card);
-    console.log(deck);
   }
 
-  renderScene(route) {
+  _renderScene(route) {
     switch (route.name) {
       case 'decks': {
         return <Decks {...this.props}/>
@@ -41,7 +33,7 @@ class Zebreto extends Component {
         <Navigator
           ref='navigator'
           initialRoute={{name: 'decks'}}
-          renderScene={this.renderScene}/>
+          renderScene={this._renderScene}/>
       </View>
     );
   }
@@ -56,8 +48,4 @@ const styles = StyleSheet.create({
 
 export default connect(store => {
   return store;
-}, dispatch => {
-  return {
-    actions: bindActionCreators(actions, dispatch)
-  };
 })(Zebreto);

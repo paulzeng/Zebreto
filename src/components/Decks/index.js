@@ -3,7 +3,6 @@ import {
   View
 } from 'react-native';
 import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
 
 import * as actions from './../../actions/deckAction'
 
@@ -25,24 +24,27 @@ class Decks extends Component {
   }
 
   componentDidMount() {
-    this.props.actions.fetchDecks();
+    this.props.dispatch(actions.fetchDecks());
   }
 
   _loadDecks() {
     if (!this.state.decks) {
+      console.log('decks is empty');
       return null;
     }
-
     return this.state.decks.map(deck => {
+      console.log('decks is below:');
+      console.log(this.state.decks);
       return (
         <Deck />//TODO
       );
     });
+
   }
 
   _newDeck(name) {
     let deck = new DeckModel(name);
-    this.props.actions.createDeck(deck);
+    this.props.dispatch(actions.createDeck(deck));
   }
 
   render() {
@@ -57,9 +59,7 @@ class Decks extends Component {
 
 export default connect(store => {
   console.log(store);
-  return store;
-}, dispatch => {
   return {
-    actions: bindActionCreators(actions, dispatch)
+    decks:store.decks
   };
 })(Decks);
