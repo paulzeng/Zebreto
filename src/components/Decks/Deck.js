@@ -14,7 +14,7 @@ export default class Deck extends Component {
   static propTypes = {
     onReview: React.PropTypes.func.isRequired,
     deck: React.PropTypes.instanceOf(DeckModel),
-    // addCards: React.PropTypes.func.isRequired
+    addCards: React.PropTypes.func.isRequired
   };
 
   _review() {
@@ -22,7 +22,7 @@ export default class Deck extends Component {
   }
 
   _addCards() {
-
+    this.props.addCards(this.props.deck);
   }
 
   render() {

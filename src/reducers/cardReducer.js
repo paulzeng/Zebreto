@@ -6,7 +6,7 @@ export default function Card(state = {}, action = {}) {
       console.log('create card');
       return {
         ...state,
-        front: 'create'
+        cards: action.payload
       };
     }
 

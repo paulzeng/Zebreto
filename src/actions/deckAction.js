@@ -40,9 +40,12 @@ export const createDeck = createAction(types.CREATE_DECK, async (deck) => {
 
 export const deleteAllDecks = createAction(types.DELETE_ALL_DECKS, async () => {
   try {
-    await AsyncStorage.clear();
-    return [];
+    let decks = [];
+    await AsyncStorage.setItem(DECK_KEY, JSON.stringify(decks));
+    return decks;
   } catch(error) {
     console.error('AsyncStorage error: ', error.message);
   }
 });
+
+export const reviewDeck = createAction(types.REVIEW_DECK, () =>  {});

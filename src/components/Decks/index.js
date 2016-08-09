@@ -13,14 +13,13 @@ import Button from './../Button';
 import NormalText from './../NormalText';
 import DeckModel from './../../data/Deck';
 
-import styles from './styles';
-
 let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
 class Decks extends Component {
   static displayName = 'Decks';
   static propTypes = {
-    //TODO
+    createCard: React.PropTypes.func.isRequired,
+    review: React.PropTypes.func.isRequired
   };
 
   constructor(props) {
@@ -32,7 +31,11 @@ class Decks extends Component {
   }
 
   _renderRow(rowData) {
-    return <Deck key={rowData.id} deck={rowData} onReview={() => {console.log('review')}}/>;
+    return <Deck
+      key={rowData.id}
+      deck={rowData}
+      addCards={this.props.createCard}
+      onReview={this.props.review}/>;
   }
 
   _newDeck(name) {
@@ -52,7 +55,7 @@ class Decks extends Component {
                   renderRow={this._renderRow.bind(this)}
                   enableEmptySections={true}
         />
-        <DeckCreation style={styles.deckButton} newDeck={this._newDeck.bind(this)}/>
+        <DeckCreation newDeck={this._newDeck.bind(this)}/>
         <Button onPress={this._deleteAll.bind(this)}>
           <NormalText>Delete All the Things</NormalText>
         </Button>
