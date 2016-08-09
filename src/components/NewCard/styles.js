@@ -10,5 +10,17 @@ export default StyleSheet.create({
   },
   buttonRow: {
     flexDirection: 'row'
+  },
+  options: {
+    backgroundColor: '#FFFFFF'
+  },
+  continueButton: {
+    backgroundColor: colors.tan
+  },
+  rightAnswer: {
+    backgroundColor: colors.green
+  },
+  wrongAnswer: {
+    backgroundColor: colors.pink
   }
 });
