@@ -1,6 +1,5 @@
 import {AsyncStorage} from 'react-native';
 import {createAction} from 'redux-actions';
-import _ from 'lodash';
 import * as types from './cardActionTypes';
 import CardModel from './../data/Card';
 
@@ -13,7 +12,7 @@ let getCardsFromObj = (val) => {
     });
   }else {
     console.info(`${CARD_KEY} not found on disk.`);
-    return new Array();
+    return [];
   }
 };
 
@@ -42,7 +41,7 @@ export const deleteCard = createAction(types.DELETE_CARD);
 export const editCard = createAction(types.EDIT_CARD);
 export const deleteAllCards = createAction(types.DELETE_ALL_CARDS, async () => {
   try {
-    let cards = new Array();
+    let cards = [];
     await AsyncStorage.setItem(CARD_KEY, JSON.stringify(cards));
     return cards;
   } catch(error) {

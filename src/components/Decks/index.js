@@ -24,10 +24,6 @@ class Decks extends Component {
     super(props);
   }
 
-  componentDidMount() {
-    this.props.dispatch(actions.fetchDecks());
-  }
-
   _renderRow = (rowData) => {
     return <Deck
       key={rowData.id}
@@ -39,7 +35,7 @@ class Decks extends Component {
   _newDeck = (name) => {
     let deck = new DeckModel(name);
     this.props.dispatch(actions.createDeck(deck));
-  }
+  };
 
   render() {
     const {decks} = this.props;

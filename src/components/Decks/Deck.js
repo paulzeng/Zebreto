@@ -19,11 +19,11 @@ export default class Deck extends Component {
 
   _review = () => {
     this.props.onReview(this.props.deck.id);
-  }
+  };
 
   _addCards = () => {
     this.props.addCards(this.props.deck);
-  }
+  };
 
   render() {
     return (

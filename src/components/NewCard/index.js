@@ -82,7 +82,7 @@ class NewCard extends Component {
 
 export default connect(store => {
   return {
-    cards: store.cards
+    cards: store.card.cards
   };
 })(NewCard);
 

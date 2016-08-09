@@ -12,9 +12,9 @@ let getDecksFromObj = (val) => {
     });
   } else {
     console.info(`${DECK_KEY} not found on disk.`);
-    return new Array();
+    return [];
   }
-}
+};
 
 export const fetchDecks = createAction(types.FETCH_DECKS, async () => {
     try {
@@ -47,4 +47,4 @@ export const deleteAllDecks = createAction(types.DELETE_ALL_DECKS, async () => {
   }
 });
 
-export const reviewDeck = createAction(types.REVIEW_DECK, () =>  {});
+export const reviewDeck = createAction(types.REVIEW_DECK);

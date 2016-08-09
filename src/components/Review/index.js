@@ -8,6 +8,7 @@ import {connect} from 'react-redux';
 import NormalText from './../NormalText';
 import HeadingText from './../HeadingText';
 import Button from './../Button';
+import ViewCard from './ViewCard';
 
 import styles from './styles';
 
@@ -23,15 +24,61 @@ class Review extends Component {
     this.state = {
       numReviewed: 0,
       numCorrect: 0,
-      currentReview: 0
+      currentReview: 0,
+      reviews: []
     }
   }
 
+  onReview(correct) {
+    if (correct) {
+      this.setState({numCorrect: this.state.numCorrect + 1});
+    }
+    this.setState({numReviewed: this.state.numReviewed + 1});
+  }
+
+  nextReview() {
+    this.setState({
+      currentReview: this.state.currentReview + 1
+    });
+  }
+
+  _contents = () => {
+    if (!this.state.reviews || this.state.reviews.length === 0) {
+      return null;
+    }
+
+    if (this.state.currentReview < this.state.reviews.length) {
+      return (
+        <ViewCard
+          onReview={this.onReview}
+          continue={this.nextReview}
+          quit={this.props.quit}
+          {...this.state.reviews[this.state.currentReview]}
+        />
+      );
+    }
+    else {
+      let percent = this.state.numCorrect / this.state.numReviewed;
+      return (
+        <View style={styles.done}>
+          <HeadingText style={styles.alternate}>
+            Reviews cleared!
+          </HeadingText>
+          <NormalText style={styles.alternate}>
+            {Math.round(percent * 100)}% correct
+          </NormalText>
+          <Button onPress={this.props.quit} style={styles.doneButton}>
+            <NormalText>Done</NormalText>
+          </Button>
+        </View>
+      );
+    }
+  };
 
   render() {
     return (
       <View>
-
+        {this._contents()}
       </View>
     );
   }
@@ -40,6 +87,6 @@ class Review extends Component {
 
 export default connect(store => {
   return {
-    cards: store.cards
+    cards: store.card.cards
   }
 })(Review);

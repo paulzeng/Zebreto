@@ -3,13 +3,15 @@ import {
   StyleSheet,
   View
 } from 'react-native';
+import {connect} from 'react-redux';
+
 
 import Button from './../Button';
-import NormalText from './../NormalText';
-import HeadingText from './../HeadingText';
-import ContinueButton from './ContinueButton';
+import NormalText from '../NormalText';
+import HeadingText from '../HeadingText';
+import ContinueButton from '../NewCard/ContinueButton';
 
-import styles from './styles';
+import styles from '../NewCard/styles';
 
 class ViewCard extends Component {
   static propTypes = {
@@ -73,3 +75,9 @@ class ViewCard extends Component {
     );
   }
 }
+
+export default connect(store => {
+  return {
+    //TODO
+  }
+})(ViewCard);
