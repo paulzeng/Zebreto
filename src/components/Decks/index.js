@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {
-  View
+  View,
+  ListView
 } from 'react-native';
 import {connect} from 'react-redux';
 
@@ -8,7 +9,13 @@ import * as actions from './../../actions/deckAction'
 
 import Deck from './Deck';
 import DeckCreation from './DeckCreation';
+import Button from './../Button';
+import NormalText from './../NormalText';
 import DeckModel from './../../data/Deck';
+
+import styles from './styles';
+
+let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
 class Decks extends Component {
   static displayName = 'Decks';
@@ -18,25 +25,14 @@ class Decks extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      decks: []
-    };
   }
 
   componentDidMount() {
     this.props.dispatch(actions.fetchDecks());
   }
 
-  _loadDecks() {
-    if (!this.props.decks) {
-      return null;
-    }
-    return this.props.decks.map(deck => {
-      return (
-        <Deck key={deck.id} deck={deck} onReview={() => {console.log('review')}} />
-      );
-    });
-
+  _renderRow(rowData) {
+    return <Deck key={rowData.id} deck={rowData} onReview={() => {console.log('review')}}/>;
   }
 
   _newDeck(name) {
@@ -44,11 +40,22 @@ class Decks extends Component {
     this.props.dispatch(actions.createDeck(deck));
   }
 
+  _deleteAll() {
+    this.props.dispatch(actions.deleteAllDecks());
+  }
+
   render() {
+    const {decks} = this.props;
     return (
       <View>
-        {this._loadDecks()}
-        <DeckCreation newDeck={this._newDeck.bind(this)}/>
+        <ListView dataSource={ds.cloneWithRows(decks || [])}
+                  renderRow={this._renderRow.bind(this)}
+                  enableEmptySections={true}
+        />
+        <DeckCreation style={styles.deckButton} newDeck={this._newDeck.bind(this)}/>
+        <Button onPress={this._deleteAll.bind(this)}>
+          <NormalText>Delete All the Things</NormalText>
+        </Button>
       </View>
     );
   }
@@ -56,6 +63,6 @@ class Decks extends Component {
 
 export default connect(store => {
   return {
-    decks:store.deck.decks
+    decks: store.deck.decks
   };
 })(Decks);

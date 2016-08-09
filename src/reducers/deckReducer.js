@@ -1,26 +1,30 @@
-import * as types from '../actions/deckActionTypes';
+import * as types from './../actions/deckActionTypes';
+import {FULFILLED} from './../actions/promiseActionTypes';
 
 export default function Deck(state = {}, action = {}) {
   const {type, payload, error, meta = {}} = action;
   switch (type) {
-    case types.FETCH_DECKS_FULFILLED: {
-      console.log('fetch decks');
+    case `${types.FETCH_DECKS}_${FULFILLED}`: {
       return {
         ...state,
         decks: payload
       };
     }
 
-    case types.CREATE_DECK: {
-      console.log('create deck')
+    case `${types.CREATE_DECK}_${FULFILLED}`: {
+      console.log('create deck');
       return {
         ...state,
-        name: 'create_deck'
+        decks: payload
       }
     }
 
-    case types.DELETE_ALL_DECKS: {
-      console.log('delete all decks')
+    case `${types.DELETE_ALL_DECKS}_${FULFILLED}`: {
+      console.log('delete all decks');
+      return {
+        ...state,
+        decks: payload
+      }
     }
 
     case types.DELETE_DECK: {

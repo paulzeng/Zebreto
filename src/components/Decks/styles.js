@@ -41,6 +41,6 @@ export default StyleSheet.create({
     backgroundColor: colors.green
   },
   enterDeck: {
-    backgroundColor: colors.blue
+    backgroundColor: colors.tan
   }
 });

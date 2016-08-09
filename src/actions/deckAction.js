@@ -25,11 +25,23 @@ export const createDeck = createAction(types.CREATE_DECK, async (deck) => {
   try {
     let val = await AsyncStorage.getItem(DECK_KEY);
     if (val == null) {
-      val = [];
+      val = '[]';
     }
-    let decks = JSON.parse(val);
+    let decks = JSON.parse(val).map(deckObj => {
+      return deckModel.fromObject(deckObj);
+    });
     decks.push(deck);
     await AsyncStorage.setItem(DECK_KEY, JSON.stringify(decks));
+    return decks;
+  } catch(error) {
+    console.error('AsyncStorage error: ', error.message);
+  }
+});
+
+export const deleteAllDecks = createAction(types.DELETE_ALL_DECKS, async () => {
+  try {
+    await AsyncStorage.clear();
+    return [];
   } catch(error) {
     console.error('AsyncStorage error: ', error.message);
   }
