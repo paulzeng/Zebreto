@@ -25,7 +25,7 @@ class Review extends Component {
       numReviewed: 0,
       numCorrect: 0,
       currentReview: 0,
-      reviews: []
+      reviews: props.reviews
     }
   }
 
@@ -52,6 +52,7 @@ class Review extends Component {
         <ViewCard
           onReview={this.onReview}
           continue={this.nextReview}
+          updateCard={this.props.updatedCard}
           quit={this.props.quit}
           {...this.state.reviews[this.state.currentReview]}
         />
@@ -87,6 +88,7 @@ class Review extends Component {
 
 export default connect(store => {
   return {
-    cards: store.card.cards
+    reviews: store.card.reviews,
+    updatedCard:store.card.updatedCard
   }
 })(Review);

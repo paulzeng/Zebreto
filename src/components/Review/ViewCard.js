@@ -3,8 +3,7 @@ import {
   StyleSheet,
   View
 } from 'react-native';
-import {connect} from 'react-redux';
-
+import * as actions from './../../actions/cardAction';
 
 import Button from './../Button';
 import NormalText from '../NormalText';
@@ -13,7 +12,7 @@ import ContinueButton from '../NewCard/ContinueButton';
 
 import styles from '../NewCard/styles';
 
-class ViewCard extends Component {
+export default class ViewCard extends Component {
   static propTypes = {
     continue: React.PropTypes.func.isRequired,
     quit: React.PropTypes.func.isRequired,
@@ -25,34 +24,63 @@ class ViewCard extends Component {
     prompt: React.PropTypes.string.isRequired
   };
 
-  getInitialState() {
-    return {
+  constructor(props) {
+    super(props);
+    this.state = {
       showingAnswer: false,
       wasCorrect: null
     };
   }
 
-  constructor(props) {
-    super(props);
-    this.state = this.getInitialState();
-  }
-
   _continue() {
-    this.setState(this.getInitialState());
+    this.setState({
+      showingAnswer: false,
+      wasCorrect: null
+    });
     this.props.continue();
   }
 
   _selectAnswer(correct) {
+    let {cardID, orientation, updatedCard} = this.props;
     this.props.onReview(correct);
     this.setState({
       showingAnswer: true,
       wasCorrect: correct
     });
-    // CardActions.review(this.props.cardID, this.props.orientation, correct)
+    this.props.dispatch(actions.review(cardID, orientation, correct));
+    if (updatedCard !== null) {
+      this.props.dispatch(actions.editCard(updatedCard));
+    }
   }
 
   _buttons() {
-
+    let {answers, correctAnswer} = this.props;
+    if (!answers) {
+      return null;
+    }
+    return answers.map((a) => {
+      let isCorrectAnswer = a == correctAnswer;
+      let buttonStyle = [styles.options];
+      if (this.state.showingAnswer && isCorrectAnswer) {
+        if (this.state.wasCorrect) {
+          buttonStyle.push(styles.rightAnswer);
+        }
+        else {
+          buttonStyle.push(styles.wrongAnswer);
+        }
+      }
+      return (
+        <Button
+          key={a}
+          disabled={this.state.showingAnswer}
+          style={buttonStyle}
+          onPress={this._selectAnswer.bind(this, a === this.props.correctAnswer)}>
+          <NormalText>
+            {a}
+          </NormalText>
+        </Button>
+      );
+    });
   }
 
   render() {
@@ -75,9 +103,3 @@ class ViewCard extends Component {
     );
   }
 }
-
-export default connect(store => {
-  return {
-    //TODO
-  }
-})(ViewCard);

@@ -46,5 +46,3 @@ export const deleteAllDecks = createAction(types.DELETE_ALL_DECKS, async () => {
     console.error('AsyncStorage error: ', error.message);
   }
 });
-
-export const reviewDeck = createAction(types.REVIEW_DECK);

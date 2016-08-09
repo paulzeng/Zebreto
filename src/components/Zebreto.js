@@ -27,9 +27,9 @@ class Zebreto extends Component {
   }
 
   _review = (deckID) => {
-    this.props.dispatch(deckActions.reviewDeck(deckID));
+    this.props.dispatch(cardActions.reviewCards(deckID));
     this.refs.navigator.push({
-      name: 'review',
+      name: 'reviewCards',
       data: {
         deckID: deckID
       }
@@ -76,7 +76,7 @@ class Zebreto extends Component {
           nextCard={this._createdCard}
           {...route.data}/>;
       }
-      case 'review': {
+      case 'reviewCards': {
         return <Review quit={this._goHome} {...route.data} />;
       }
       default:
