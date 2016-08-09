@@ -28,15 +28,15 @@ class Decks extends Component {
     this.props.dispatch(actions.fetchDecks());
   }
 
-  _renderRow(rowData) {
+  _renderRow = (rowData) => {
     return <Deck
       key={rowData.id}
       deck={rowData}
       addCards={this.props.createCard}
       onReview={this.props.review}/>;
-  }
+  };
 
-  _newDeck(name) {
+  _newDeck = (name) => {
     let deck = new DeckModel(name);
     this.props.dispatch(actions.createDeck(deck));
   }
@@ -46,10 +46,10 @@ class Decks extends Component {
     return (
       <View>
         <ListView dataSource={ds.cloneWithRows(decks || [])}
-                  renderRow={this._renderRow.bind(this)}
+                  renderRow={this._renderRow}
                   enableEmptySections={true}
         />
-        <DeckCreation newDeck={this._newDeck.bind(this)}/>
+        <DeckCreation newDeck={this._newDeck}/>
       </View>
     );
   }

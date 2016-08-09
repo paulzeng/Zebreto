@@ -31,38 +31,38 @@ class NewCard extends Component {
     };
   }
 
-  _handleFront(text) {
+  _handleFront = (text) => {
     this.setState({front: text});
-  }
+  };
 
-  _handleBack(text) {
+  _handleBack = (text) => {
     this.setState({back: text});
-  }
+  };
 
-  _createCard() {
+  _createCard = () => {
     let card = new CardModel(this.state.front, this.state.back, this.props.deck.id);
     this.props.dispatch(cardActions.createCard(card));
     this.props.nextCard(this.props.deck);
-  }
+  };
 
-  _reviewDeck() {
+  _reviewDeck = () => {
 
-  }
+  };
 
   render() {
     return (
       <View>
         <LabeledInput
-          onEntry={this._handleFront.bind(this)}
+          onEntry={this._handleFront}
           label="Font"
           clearOnSubmit={false}
-          onChange={this._handleFront.bind(this)}/>
+          onChange={this._handleFront}/>
         <LabeledInput
-          onEntry={this._handleBack.bind(this)}
+          onEntry={this._handleBack}
           label="Back"
           clearOnSubmit={false}
-          onChange={this._handleBack.bind(this)}/>
-        <Button style={styles.createButton} onPress={this._createCard.bind(this)}>
+          onChange={this._handleBack}/>
+        <Button style={styles.createButton} onPress={this._createCard}>
           <NormalText>Create Card</NormalText>
         </Button>
         <View style={styles.buttonRow}>
@@ -71,7 +71,7 @@ class NewCard extends Component {
             <NormalText>Done</NormalText>
           </Button>
           <Button style={styles.secondaryButton}
-                  onPress={this._reviewDeck.bind(this)}>
+                  onPress={this._reviewDeck}>
             <NormalText>Review Deck</NormalText>
           </Button>
         </View>

@@ -17,25 +17,25 @@ export default class Deck extends Component {
     addCards: React.PropTypes.func.isRequired
   };
 
-  _review() {
+  _review = () => {
     this.props.onReview(this.props.deck.id);
   }
 
-  _addCards() {
+  _addCards = () => {
     this.props.addCards(this.props.deck);
   }
 
   render() {
     return (
       <View style={styles.deckGroup}>
-        <Button style={styles.deckButton} onPress={this._review.bind(this)}>
+        <Button style={styles.deckButton} onPress={this._review}>
           <NormalText>
             {this.props.deck.name}:{this.props.deck.dueCards} due
           </NormalText>
         </Button>
 
         <Button style={styles.editButton}
-                onPress={this._addCards.bind(this)}>
+                onPress={this._addCards}>
           <NormalText>+</NormalText>
         </Button>
       </View>
