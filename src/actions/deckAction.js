@@ -1,21 +1,25 @@
 import {AsyncStorage} from 'react-native';
 import {createAction} from 'redux-actions';
 import * as types from './deckActionTypes';
-import deckModel from './../data/Deck';
+import DeckModel from './../data/Deck';
 
 const DECK_KEY = 'zebreto-decks';
+
+let getDecksFromObj = (val) => {
+  if (val != null) {
+    return JSON.parse(val).map(deckObj => {
+      return DeckModel.fromObject(deckObj);
+    });
+  } else {
+    console.info(`${DECK_KEY} not found on disk.`);
+    return new Array();
+  }
+}
 
 export const fetchDecks = createAction(types.FETCH_DECKS, async () => {
     try {
       let val = await AsyncStorage.getItem(DECK_KEY);
-      if (val != null) {
-        let decks = JSON.parse(val).map(deckObj => {
-          return deckModel.fromObject(deckObj);
-        });
-        return decks;
-      } else {
-        console.info(`${DECK_KEY} not found on disk.`);
-      }
+      return getDecksFromObj(val);
     } catch (error) {
       console.error('AsyncStorage error: ', error.message);
     }
@@ -24,12 +28,7 @@ export const fetchDecks = createAction(types.FETCH_DECKS, async () => {
 export const createDeck = createAction(types.CREATE_DECK, async (deck) => {
   try {
     let val = await AsyncStorage.getItem(DECK_KEY);
-    if (val == null) {
-      val = '[]';
-    }
-    let decks = JSON.parse(val).map(deckObj => {
-      return deckModel.fromObject(deckObj);
-    });
+    let decks = getDecksFromObj(val);
     decks.push(deck);
     await AsyncStorage.setItem(DECK_KEY, JSON.stringify(decks));
     return decks;

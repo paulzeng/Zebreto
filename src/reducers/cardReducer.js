@@ -1,12 +1,14 @@
 import * as types from '../actions/cardActionTypes';
+import {FULFILLED} from './../actions/promiseActionTypes';
 
 export default function Card(state = {}, action = {}) {
-  switch (action.type) {
-    case types.CREATE_CARD: {
+  const {type, payload, error, meta = {}} = action;
+  switch (type) {
+    case `${types.CREATE_CARD}_${FULFILLED}`: {
       console.log('create card');
       return {
         ...state,
-        cards: action.payload
+        cards: payload
       };
     }
 

@@ -7,6 +7,7 @@ import {connect} from 'react-redux';
 
 import * as cardActions from './../../actions/cardAction';
 import DeckModel from './../../data/Deck';
+import CardModel from './../../data/Card';
 
 import Button from '../Button';
 import LabeledInput from '../LabeledInput';
@@ -35,15 +36,12 @@ class NewCard extends Component {
   }
 
   _handleBack(text) {
-    this.setState({front: text});
+    this.setState({back: text});
   }
 
   _createCard() {
-    this.props.dispatch(cardActions.createCard({
-      front: this.state.front,
-      back: this.state.back,
-      deck: this.props.deck
-    }));
+    let card = new CardModel(this.state.front, this.state.back, this.props.deck.id);
+    this.props.dispatch(cardActions.createCard(card));
     this.props.nextCard(this.props.deck);
   }
 

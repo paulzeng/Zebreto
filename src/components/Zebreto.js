@@ -7,12 +7,14 @@ import {
 } from 'react-native';
 import {connect} from 'react-redux';
 
-import * as deckActions from './../actions/deckAction';
+import actions from './../actions';
 
 //components
 import Heading from './Header';
 import Decks from './Decks';
 import NewCard from './NewCard';
+import Button from './Button';
+import NormalText from './NormalText';
 
 class Zebreto extends Component {
   static displayName:'Zebreto';
@@ -21,7 +23,7 @@ class Zebreto extends Component {
   }
 
   _review(deckID) {
-    this.props.dispatch(deckActions.reviewDeck());
+    this.props.dispatch(actions.reviewDeck());
     this.refs.navigator.push({
       name: 'review',
       data: {
@@ -43,13 +45,25 @@ class Zebreto extends Component {
     this.refs.navigator.popToTop();
   }
 
+  _deleteAll() {
+    console.log(actions);
+    this.props.dispatch(actions.deleteAllDecks());
+    this.props.dispatch(actions.deleteAllCards());
+  }
+
   _renderScene(route) {
     switch (route.name) {
       case 'decks': {
         return (
-          <Decks createCard={this._createdCard.bind(this)}
-                 review={this._review.bind(this)}
-          />
+          <View>
+            <Decks createCard={this._createdCard.bind(this)}
+                   review={this._review.bind(this)}
+            />
+            <Button onPress={this._deleteAll.bind(this)}>
+              <NormalText>Delete All the Things</NormalText>
+            </Button>
+          </View>
+
         );
       }
       case 'createCards': {
