@@ -22,7 +22,7 @@ class Zebreto extends Component {
   componentWillMount() {
   }
 
-  _review(deckID) {
+  _review = (deckID) => {
     this.props.dispatch(actions.reviewDeck());
     this.refs.navigator.push({
       name: 'review',
@@ -30,36 +30,35 @@ class Zebreto extends Component {
         deckID: deckID
       }
     });
-  }
+  };
 
-  _createdCard(deck) {
+  _createdCard = (deck) => {
     this.refs.navigator.push({
       name: 'createCards',
       data: {
         deck: deck
       }
     });
-  }
+  };
 
-  _goHome() {
+  _goHome = () => {
     this.refs.navigator.popToTop();
-  }
+  };
 
-  _deleteAll() {
-    console.log(actions);
+  _deleteAll = () => {
     this.props.dispatch(actions.deleteAllDecks());
     this.props.dispatch(actions.deleteAllCards());
-  }
+  };
 
-  _renderScene(route) {
+  _renderScene = (route) => {
     switch (route.name) {
       case 'decks': {
         return (
           <View>
-            <Decks createCard={this._createdCard.bind(this)}
-                   review={this._review.bind(this)}
+            <Decks createCard={this._createdCard}
+                   review={this._review}
             />
-            <Button onPress={this._deleteAll.bind(this)}>
+            <Button onPress={this._deleteAll}>
               <NormalText>Delete All the Things</NormalText>
             </Button>
           </View>
@@ -68,15 +67,15 @@ class Zebreto extends Component {
       }
       case 'createCards': {
         return <NewCard
-          review={this._review.bind(this)}
-          quit={this._goHome.bind(this)}
-          nextCard={this._createdCard.bind(this)}
+          review={this._review}
+          quit={this._goHome}
+          nextCard={this._createdCard}
           {...route.data}/>;
       }
       default:
         console.error('Encountered unexpected route: ' + route.name);
     }
-  }
+  };
 
   render() {
     return (
@@ -85,7 +84,7 @@ class Zebreto extends Component {
         <Navigator
           ref='navigator'
           initialRoute={{name: 'decks'}}
-          renderScene={this._renderScene.bind(this)}/>
+          renderScene={this._renderScene}/>
       </View>
     );
   }
