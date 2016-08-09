@@ -5,12 +5,14 @@ import {
 } from 'react-native';
 import {connect} from 'react-redux';
 
-import * as cardActions from './../actions/cardAction';
-import * as deckActions from './../actions/deckAction';
+import * as cardActions from './../../actions/cardAction';
+import * as deckActions from './../../actions/deckAction';
 
 import Deck from './Deck';
 import DeckCreation from './DeckCreation';
 import DeckModel from './../../data/Deck';
+import Button from './../Button';
+import NormalText from './../NormalText';
 
 let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
@@ -33,9 +35,9 @@ class Decks extends Component {
       onReview={this.props.review}/>;
   };
 
-  newDeck(name) {
+  _newDeck = (name) => {
     let deck = new DeckModel(name);
-    this.props.dispatch(actions.createDeck(deck));
+    this.props.dispatch(deckActions.createDeck(deck));
   };
 
   _deleteAll = () => {
@@ -44,9 +46,9 @@ class Decks extends Component {
   };
 
   _renderFooter = () => {
-    return(
+    return (
       <View>
-        <DeckCreation newDeck={this.newDeck}/>
+        <DeckCreation newDeck={this._newDeck}/>
         <Button onPress={this._deleteAll}>
           <NormalText>Delete All the Things</NormalText>
         </Button>

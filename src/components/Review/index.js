@@ -44,7 +44,11 @@ class Review extends Component {
 
   _contents = () => {
     if (!this.state.reviews || this.state.reviews.length === 0) {
-      return null;
+      return (
+        <Button onPress={this.props.quit} style={styles.doneButton}>
+          <NormalText>Done</NormalText>
+        </Button>
+      );
     }
 
     if (this.state.currentReview < this.state.reviews.length) {
@@ -78,7 +82,7 @@ class Review extends Component {
 
   render() {
     return (
-      <View style={styles.blue}>
+      <View style={styles.container}>
         {this._contents()}
       </View>
     );
