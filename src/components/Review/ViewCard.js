@@ -4,15 +4,16 @@ import {
   View
 } from 'react-native';
 import * as actions from './../../actions/cardAction';
+import {connect} from 'react-redux';
 
 import Button from './../Button';
 import NormalText from '../NormalText';
 import HeadingText from '../HeadingText';
-import ContinueButton from '../NewCard/ContinueButton';
+import ContinueButton from './ContinueButton';
 
 import styles from '../NewCard/styles';
 
-export default class ViewCard extends Component {
+class ViewCard extends Component {
   static propTypes = {
     continue: React.PropTypes.func.isRequired,
     quit: React.PropTypes.func.isRequired,
@@ -32,15 +33,15 @@ export default class ViewCard extends Component {
     };
   }
 
-  _continue() {
+  _continue = () => {
     this.setState({
       showingAnswer: false,
       wasCorrect: null
     });
     this.props.continue();
-  }
+  };
 
-  _selectAnswer(correct) {
+  _selectAnswer = (correct) => {
     let {cardID, orientation, updatedCard} = this.props;
     this.props.onReview(correct);
     this.setState({
@@ -48,10 +49,10 @@ export default class ViewCard extends Component {
       wasCorrect: correct
     });
     this.props.dispatch(actions.review(cardID, orientation, correct));
-    if (updatedCard !== null) {
+    if (!!updatedCard) {
       this.props.dispatch(actions.editCard(updatedCard));
     }
-  }
+  };
 
   _buttons() {
     let {answers, correctAnswer} = this.props;
@@ -96,10 +97,12 @@ export default class ViewCard extends Component {
             ? <ContinueButton onPress={this._continue}
                               wasCorrect={this.state.wasCorrect}/>
             : <Button onPress={this.props.quit} style={styles.continueButton}>
-            <NormalText>Stop Reviewing</NormalText>
-          </Button>
+                <NormalText>Stop Reviewing</NormalText>
+              </Button>
         }
       </View>
     );
   }
 }
+
+export default connect()(ViewCard);

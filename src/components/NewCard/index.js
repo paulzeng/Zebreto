@@ -46,7 +46,7 @@ class NewCard extends Component {
   };
 
   _reviewDeck = () => {
-
+    this.props.review(this.props.deck.id);
   };
 
   render() {

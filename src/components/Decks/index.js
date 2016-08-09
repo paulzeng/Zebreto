@@ -5,7 +5,8 @@ import {
 } from 'react-native';
 import {connect} from 'react-redux';
 
-import * as actions from './../../actions/deckAction'
+import * as cardActions from './../actions/cardAction';
+import * as deckActions from './../actions/deckAction';
 
 import Deck from './Deck';
 import DeckCreation from './DeckCreation';
@@ -32,10 +33,27 @@ class Decks extends Component {
       onReview={this.props.review}/>;
   };
 
-  _newDeck = (name) => {
+  newDeck(name) {
     let deck = new DeckModel(name);
     this.props.dispatch(actions.createDeck(deck));
   };
+
+  _deleteAll = () => {
+    this.props.dispatch(deckActions.deleteAllDecks());
+    this.props.dispatch(cardActions.deleteAllCards());
+  };
+
+  _renderFooter = () => {
+    return(
+      <View>
+        <DeckCreation newDeck={this.newDeck}/>
+        <Button onPress={this._deleteAll}>
+          <NormalText>Delete All the Things</NormalText>
+        </Button>
+      </View>
+    );
+  }
+
 
   render() {
     const {decks} = this.props;
@@ -44,8 +62,8 @@ class Decks extends Component {
         <ListView dataSource={ds.cloneWithRows(decks || [])}
                   renderRow={this._renderRow}
                   enableEmptySections={true}
+                  renderFooter={this._renderFooter}
         />
-        <DeckCreation newDeck={this._newDeck}/>
       </View>
     );
   }

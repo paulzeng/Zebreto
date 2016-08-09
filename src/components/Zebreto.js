@@ -7,15 +7,12 @@ import {
 } from 'react-native';
 import {connect} from 'react-redux';
 
-import * as cardActions from './../actions/cardAction';
-import * as deckActions from './../actions/deckAction';
+import {cardActions, deckActions} from './../actions';
 
 //components
 import Heading from './Header';
 import Decks from './Decks';
 import NewCard from './NewCard';
-import Button from './Button';
-import NormalText from './NormalText';
 import Review from './Review';
 
 class Zebreto extends Component {
@@ -62,9 +59,6 @@ class Zebreto extends Component {
             <Decks createCard={this._createdCard}
                    review={this._review}
             />
-            <Button onPress={this._deleteAll}>
-              <NormalText>Delete All the Things</NormalText>
-            </Button>
           </View>
 
         );

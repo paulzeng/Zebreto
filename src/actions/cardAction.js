@@ -42,7 +42,7 @@ export const deleteCard = createAction(types.DELETE_CARD);
 
 export const editCard = createAction(types.EDIT_CARD, async(updatedCard) => {
   try {
-    var val = await AsyncStorage.getItem(CARD_KEY);
+    let val = await AsyncStorage.getItem(CARD_KEY);
     let cards = getCardsFromObj(val);
     let match = _.find(cards, (card) => {
       return card.id === updatedCard.id;
@@ -66,4 +66,10 @@ export const deleteAllCards = createAction(types.DELETE_ALL_CARDS, async() => {
 
 export const reviewCards = createAction(types.REVIEW_CARDS);
 
-export const review = createAction(types.REVIEW);
+export const review = createAction(types.REVIEW, (cardID, orientation, correct) => {
+  return {
+    cardID,
+    orientation,
+    correct
+  }
+});

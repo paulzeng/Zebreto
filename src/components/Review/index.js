@@ -29,18 +29,18 @@ class Review extends Component {
     }
   }
 
-  onReview(correct) {
+  _onReview = (correct) => {
     if (correct) {
       this.setState({numCorrect: this.state.numCorrect + 1});
     }
     this.setState({numReviewed: this.state.numReviewed + 1});
-  }
+  };
 
-  nextReview() {
+  _nextReview = () => {
     this.setState({
       currentReview: this.state.currentReview + 1
     });
-  }
+  };
 
   _contents = () => {
     if (!this.state.reviews || this.state.reviews.length === 0) {
@@ -50,8 +50,8 @@ class Review extends Component {
     if (this.state.currentReview < this.state.reviews.length) {
       return (
         <ViewCard
-          onReview={this.onReview}
-          continue={this.nextReview}
+          onReview={this._onReview}
+          continue={this._nextReview}
           updateCard={this.props.updatedCard}
           quit={this.props.quit}
           {...this.state.reviews[this.state.currentReview]}
@@ -78,7 +78,7 @@ class Review extends Component {
 
   render() {
     return (
-      <View>
+      <View style={styles.blue}>
         {this._contents()}
       </View>
     );

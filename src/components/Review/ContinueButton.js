@@ -5,9 +5,9 @@ import {
 } from 'react-native';
 
 import Button from './../Button';
-import NormalText from './../NormalText';
+import NormalText from '../NormalText';
 
-import styles from './styles';
+import styles from '../NewCard/styles';
 
 export default class ContinueButton extends Component {
   static propTypes = {
