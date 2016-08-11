@@ -2,19 +2,24 @@ import React, { Component } from 'react';
 import {
   StyleSheet,
   Text,
-  View,
-  Dimensions
+  Dimensions,
 } from 'react-native';
+import { fonts, scalingFactors } from './../styles/fonts';
 
-import {fonts, scalingFactors} from './../styles/fonts';
+const { width } = Dimensions.get('window');
 
-let {width} = Dimensions.get('window');
+const scaled = StyleSheet.create({
+  normal: {
+    fontSize: width / scalingFactors.normal,
+  },
+});
 
 export default class NormalText extends Component {
-  static displayName =  'NormalText';
+  static displayName = 'NormalText';
   static propTypes = {
-    style: Text.propTypes.style
-  }
+    style: Text.propTypes.style,
+    children: React.Children.isRequired,
+  };
 
   render() {
     return (
@@ -24,9 +29,3 @@ export default class NormalText extends Component {
     );
   }
 }
-
-const scaled = StyleSheet.create({
-  normal: {
-    fontSize: width / scalingFactors.normal
-  }
-});
